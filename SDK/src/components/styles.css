@@ -1,0 +1,557 @@
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 400px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.messages {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.message {
+  margin: 8px 0;
+  padding: 8px 12px;
+  border-radius: 12px;
+  max-width: 70%;
+}
+
+.message.sent {
+  background-color: #0084ff;
+  color: white;
+  margin-left: auto;
+}
+
+.message.received {
+  background-color: #f0f0f0;
+  margin-right: auto;
+}
+
+.input-area {
+  display: flex;
+  padding: 16px;
+  border-top: 1px solid #ddd;
+}
+
+.input-area input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  margin-right: 8px;
+}
+
+.input-area button {
+  padding: 8px 16px;
+  background-color: #0084ff;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.input-area button:hover {
+  background-color: #0073e6;
+}
+
+.video-call-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.video-wrapper {
+  position: relative;
+  padding-top: 56.25%; /* 16:9 aspect ratio */
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.video-wrapper video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-wrapper span {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.controls button {
+  padding: 12px 24px;
+  border-radius: 24px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.controls button:first-child {
+  background-color: #4caf50;
+  color: white;
+}
+
+.controls button:last-child {
+  background-color: #f44336;
+  color: white;
+}
+
+/* Add these styles for connection status and error messages */
+
+.connection-status {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+  font-size: 12px;
+}
+
+.status-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.status-indicator.connecting {
+  background-color: #ffcc00;
+  animation: blink 1s infinite;
+}
+
+.status-indicator.connected {
+  background-color: #4caf50;
+}
+
+.status-indicator.disconnected {
+  background-color: #f44336;
+}
+
+.retry-button {
+  margin-left: auto;
+  padding: 4px 8px;
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.retry-button:hover {
+  background-color: #0b7dda;
+}
+
+.error-message {
+  padding: 8px;
+  background-color: #ffebee;
+  color: #d32f2f;
+  font-size: 12px;
+  text-align: center;
+}
+
+@keyframes blink {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+/* Video Call Styles */
+.video-call-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  background-color: #121212;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Remote Video (Main) */
+.remote-video-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.remote-video-container.hidden {
+  display: none;
+}
+
+.remote-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-color: #2c2c2c;
+}
+
+.remote-name {
+  position: absolute;
+  bottom: 100px;
+  left: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Local Video (PiP) */
+.local-video-container {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 150px;
+  height: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 2;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.local-video-container.centered {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  right: 0;
+  top: 0;
+  border: none;
+}
+
+.local-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-color: #2c2c2c;
+  transition: all 0.3s ease;
+}
+
+.local-video.video-disabled {
+  background-color: #3a3a3a;
+}
+
+.video-off-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 14px;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.local-name {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+/* Call Status */
+.call-status-container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 3;
+}
+
+.call-status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.call-status.connecting {
+  background-color: rgba(255, 196, 0, 0.2);
+  color: #ffc400;
+}
+
+.call-status.connected {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+}
+
+.call-status.ended {
+  background-color: rgba(244, 67, 54, 0.2);
+  color: #f44336;
+}
+
+.call-status.connecting::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ffc400;
+  margin-right: 6px;
+  animation: blink 1s infinite;
+}
+
+.call-status.connected::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #4caf50;
+  margin-right: 6px;
+}
+
+/* Call Controls */
+.call-controls {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+}
+
+/* Start Call Button */
+.start-call-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.start-call-button:hover {
+  background-color: #43a047;
+  transform: translateY(-2px);
+}
+
+.start-call-button:active {
+  transform: translateY(0);
+}
+
+.icon-phone::before {
+  content: "📞";
+  margin-right: 8px;
+}
+
+/* In Call Controls */
+.in-call-controls {
+  display: flex;
+  gap: 16px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 12px 24px;
+  border-radius: 50px;
+}
+
+.mute-button,
+.video-button,
+.end-call-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mute-button,
+.video-button {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.mute-button:hover,
+.video-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.mute-button.active,
+.video-button.active {
+  background-color: #f44336;
+}
+
+.end-call-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.end-call-button:hover {
+  background-color: #e53935;
+  transform: scale(1.1);
+}
+
+/* Calling Controls */
+.calling-controls,
+.incoming-call-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 16px 32px;
+  border-radius: 12px;
+}
+
+.calling-text,
+.incoming-call-text {
+  color: white;
+  font-size: 16px;
+}
+
+.incoming-call-buttons {
+  display: flex;
+  gap: 16px;
+}
+
+.accept-call-button,
+.reject-call-button {
+  border: none;
+  border-radius: 50px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.accept-call-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.reject-call-button {
+  background-color: #f44336;
+  color: white;
+}
+
+/* Icons */
+.icon-mic::before { content: "🎤"; }
+.icon-muted::before { content: "🔇"; }
+.icon-video::before { content: "📹"; }
+.icon-video-off::before { content: "🚫"; }
+.icon-hangup::before { content: "📵"; }
+.icon-accept::before { content: "✅"; }
+.icon-reject::before { content: "❌"; }
+
+/* Animation */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .local-video-container {
+    width: 100px;
+    height: 130px;
+  }
+  
+  .in-call-controls {
+    padding: 10px 16px;
+  }
+  
+  .mute-button,
+  .video-button,
+  .end-call-button {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Add these styles to your existing CSS */
+
+.switch-camera-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.switch-camera-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.icon-switch-camera::before {
+  content: "🔄"; /* Unicode camera switch icon */
+}
+
+.camera-indicator {
+  position: absolute;
+  bottom: 90px;
+  left: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  z-index: 3;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* On mobile, adjust position for smaller screens */
+@media (max-width: 768px) {
+  .camera-indicator {
+    bottom: 80px;
+    font-size: 10px;
+    max-width: 150px;
+  }
+}
