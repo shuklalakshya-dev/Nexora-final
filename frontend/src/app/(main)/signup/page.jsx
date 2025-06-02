@@ -48,20 +48,20 @@ export default function SignupPage() {
   const [backendConnected, setBackendConnected] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
 
-  useEffect(() => {
+  // useEffect(() => {
     // Test backend connection when component mounts
-    const checkBackendConnection = async () => {
-      try {
-        await testConnection();
-        setBackendConnected(true);
-      } catch (err) {
-        setError('Unable to connect to the server. Please check if the backend is running.');
-        setBackendConnected(false);
-      }
-    };
+    // const checkBackendConnection = async () => {
+    //   try {
+    //     await testConnection();
+    //     setBackendConnected(true);
+    //   } catch (err) {
+    //     setError('Unable to connect to the server. Please check if the backend is running.');
+    //     setBackendConnected(false);
+    //   }
+    // };
 
-    checkBackendConnection();
-  }, []);
+  //   checkBackendConnection();
+  // }, []);
 
   const validateField = async (fieldName, value) => {
     try {
@@ -150,11 +150,6 @@ export default function SignupPage() {
             Create your account
           </h2>
 
-          {!backendConnected && (
-            <div className="bg-yellow-500/20 border border-yellow-500 text-yellow-500 px-4 py-3 rounded-lg mb-4">
-              Backend server is not connected.
-            </div>
-          )}
           {error && (
             <div className="bg-red-500/20 border border-red-500 text-red-500 px-4 py-3 rounded-lg mb-4">
               {error}
@@ -244,7 +239,7 @@ export default function SignupPage() {
 
             <button
               type="submit"
-              disabled={loading || !backendConnected}
+              disabled={loading}
               className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full text-lg font-medium transition"
             >
               {loading ? 'Creating account...' : 'Sign Up'}
